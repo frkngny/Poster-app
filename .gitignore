@@ -1,0 +1,18 @@
+.vscode/
+.git/
+
+node_modules/
+
+package-lock.json
+
+
+
+
+# backend
+.venv/
+
+__pycache__
+__pycache__/
+migrations
+
+db.sqlite3
