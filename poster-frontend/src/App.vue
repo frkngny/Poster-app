@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <nav class="py-10 px-8 border-b border-gray-200">
+    <nav class="py-4 px-8 border-b border-gray-200">
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between">
                 <div class="menu-left">
@@ -37,13 +37,13 @@
                         </svg>
                     </a>
 
-                    <a href="#">
+                    <RouterLink :to="{ 'name': 'search' }">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
                         </svg>
-                    </a>
+                    </RouterLink>
                 </div>
 
                 <div class="menu-right">

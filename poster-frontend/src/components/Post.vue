@@ -1,12 +1,18 @@
 <template>
     <div class="mb-6 flex items-center justify-between">
-        <RouterLink :to="{ 'name': 'profile', params: { 'id': post.created_by.id } }">
+        
             <div class="flex items-center space-x-6">
-                <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                <RouterLink :to="{ 'name': 'profile', params: { 'id': post.created_by.id } }">
+                    <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                </RouterLink>
 
-                <p><strong>{{ post.created_by.name }}</strong></p>
+                <p><strong>
+                    <RouterLink :to="{ 'name': 'profile', params: { 'id': post.created_by.id } }">
+                        {{ post.created_by.name }}
+                    </RouterLink>
+                </strong></p>
             </div>
-        </RouterLink>
+        
 
         <p class="text-gray-600">{{ post.created_at_formatted }}</p>
     </div>
