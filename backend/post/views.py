@@ -1,15 +1,19 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .serializers import PostSerializer
-from .models import Post
+from .models import Post, Like
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .forms import PostForm
+from django.db.models import Q
 
 class PostList(ListAPIView):
     serializer_class = PostSerializer
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
+        if request.GET.get('in_friends'):
+            user_friends = request.user.friends.all()
+            posts = Post.objects.filter(Q(created_by_id=request.user.id) | Q(created_by_id__in=user_friends))
         serializer = self.serializer_class(posts, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -30,3 +34,20 @@ class PostCreate(CreateAPIView):
             post.save()
             return JsonResponse(self.serializer_class(post).data, safe=False)
         return JsonResponse({'error': 'error'})
+
+
+class PostLike(CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        
+        post_id = request.data.get('post_id')
+        print(post_id)
+        post = Post.objects.get(id=post_id)
+        
+        if user not in post.liked.all():
+            like = Like.objects.create(user=user, post=post)
+        else:
+            like = Like.objects.get(user=user, post=post)
+            like.delete()
+        
+        return JsonResponse({})

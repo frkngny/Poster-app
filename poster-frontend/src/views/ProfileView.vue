@@ -136,6 +136,7 @@ export default {
                 .then((response) => {
                     if (response.status === 200) {
                         this.toastStore.showToast(3000, response.data.message, 'bg-emerald-300')
+                        this.$router.go(this.$router.currentRoute)
                     }
                 })
                 .catch((error) => {
@@ -165,7 +166,7 @@ export default {
         handleIfRequest(status, sender_id) {
             axios.put(`/api/user/${this.userStore.user.id}/friends/request`, { 'sender_id': sender_id, 'status': status })
                 .then((response) => {
-                    console.log(response.data)
+                    this.$router.go(this.$router.currentRoute)
                 })
                 .catch((error) => {
                     console.log(error);

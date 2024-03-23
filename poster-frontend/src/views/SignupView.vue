@@ -107,6 +107,7 @@ export default {
                         this.form.name = ''
                         this.form.password1 = ''
                         this.form.password2 = ''
+                        this.$router.push({name: 'login'})
                     } else{
                         this.toastStore.showToast(5000, 'Something went wrong.', 'bg-red-300')
                     }

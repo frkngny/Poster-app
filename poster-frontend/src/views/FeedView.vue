@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         getFeed() {
-            axios.get('/api/posts/')
+            axios.get(`/api/posts/?in_friends=true`)
             .then((response) => {
                 this.posts = response.data
             })

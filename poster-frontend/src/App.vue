@@ -49,13 +49,16 @@
                 <div class="menu-right">
                     <template v-if="userStore.user.isAuthenticated">
                         <RouterLink :to="{ 'name': 'profile', params: {'id': userStore.user.id} }">
-                            <img src="https://i.pravatar.cc/40?img=70" class="rounded-full">
+                            <img src="https://i.pravatar.cc/60?img=70" class="rounded-full">
                         </RouterLink>
+                        <button class="inline-block py-1 px-2 bg-red-600 text-white rounded-lg"
+                            @click="logout">Logout</button>
                     </template>
-
                     <template v-else>
-                        <RouterLink to="/login" class="mr-4 py-4 px-6 bg-gray-600 text-white rounded-lg">Log in</RouterLink>
-                        <RouterLink to="/signup" class="py-4 px-6 bg-purple-600 text-white rounded-lg">Sign up</RouterLink>
+                        <RouterLink to="/login" class="mr-4 py-4 px-6 bg-gray-600 text-white rounded-lg">Log in
+                        </RouterLink>
+                        <RouterLink to="/signup" class="py-4 px-6 bg-purple-600 text-white rounded-lg">Sign up
+                        </RouterLink>
                     </template>
                 </div>
             </div>
@@ -91,6 +94,46 @@ export default {
             axios.defaults.headers.common["Authorization"] = "Bearer " + token
         } else {
             axios.defaults.headers.common["Authorization"] = ""
+        }
+    },
+    unmounted() {
+        this.dropdownTrigger()
+        const $targetEl = document.getElementById('dropdownMenu');
+        const $triggerEl = document.getElementById('dropdownButton');
+        const dropdown = new Dropdown($targetEl, $triggerEl, options, instanceOptions);
+    },
+    methods: {
+        logout() {
+            this.userStore.removeToken()
+            this.$router.push({ name: 'login' })
+        },
+        dropdownTrigger() {
+            // options with default values
+            const options = {
+                placement: 'bottom',
+                triggerType: 'click',
+                offsetSkidding: 0,
+                offsetDistance: 10,
+                delay: 300,
+                ignoreClickOutsideClass: false,
+                onHide: () => {
+                    console.log('dropdown has been hidden');
+                },
+                onShow: () => {
+                    console.log('dropdown has been shown');
+                },
+                onToggle: () => {
+                    console.log('dropdown has been toggled');
+                },
+            };
+
+            // instance options object
+            const instanceOptions = {
+                id: 'dropdownMenu',
+                override: true
+            };
+
+            
         }
     }
 }

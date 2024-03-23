@@ -49,12 +49,15 @@
 <script>
 import axios from 'axios';
 import { useUserStore } from "@/stores/user"
+import { useToastStore } from '@/stores/toast';
 
 export default {
     setup() {
         const userStore = useUserStore()
+        const toastStore = useToastStore();
         return {
-            userStore
+            userStore,
+            toastStore
         }
     },
     data() {
@@ -84,13 +87,14 @@ export default {
                             this.userStore.setToken(response.data)
 
                             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access
-
                         } else {
+                            axios.defaults.headers.common["Authorization"] = ""
                             console.log(response)
                         }
                     })
                     .catch((error) => {
-                        console.log('error', error)
+                        axios.defaults.headers.common["Authorization"] = ""
+                        this.toastStore.showToast(3000, error.response.data.detail, 'bg-red-300')
                     })
 
                 await axios.get('/api/me')
@@ -103,8 +107,11 @@ export default {
                         }
                     })
                     .catch((error) => {
-                        console.log('error', error)
+                        this.toastStore.showToast(3000, error.response.data.detail, 'bg-red-300')
+                        //console.log('error', error)
                     })
+
+
             }
         }
     }
