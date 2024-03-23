@@ -25,7 +25,7 @@ def signup(request):
         'password1': data.get('password1'),
         'password2': data.get('password2'),
     })
-    print(form)
+    
     if form.is_valid():
         form.save()
         
