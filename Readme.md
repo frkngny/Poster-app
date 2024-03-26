@@ -36,3 +36,6 @@ pip install django==5.0.3 djangorestframework==3.15.0 djangorestframework-simple
 
 Note: We will use JWT authentication. Therefore we are installing simple jwt.
 
+
+### DB Setup:
+We will use default db (sqlite) until the developments are done. Then, we can switch to any other DB structure.

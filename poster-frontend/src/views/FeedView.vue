@@ -16,7 +16,7 @@
                 </form>
             </div>
 
-            <div class="p-4 bg-white border border-gray-200 rounded-lg" v-for="post in posts" v-bind:key="post.id">
+            <div class="p-4 bg-gray-800 text-white border border-gray-200 rounded-lg" v-for="post in posts" v-bind:key="post.id">
                 <Post :post="post"/> 
             </div>
         </div>

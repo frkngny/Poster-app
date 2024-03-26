@@ -2,23 +2,23 @@
     <div class="mb-6 flex items-center justify-between">
 
         <div class="flex items-center space-x-6">
-            <RouterLink :to="{ 'name': 'profile', params: { 'id': post.created_by.id } }">
-                <img src="https://i.pravatar.cc/300?img=52" class="w-[40px] rounded-full">
+            <RouterLink :to="{ 'name': 'profile', params: { 'id': comment.user.id } }">
+                <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
             </RouterLink>
 
             <p><strong>
-                    <RouterLink :to="{ 'name': 'profile', params: { 'id': post.created_by.id } }">
-                        {{ post.created_by.name }}
+                    <RouterLink :to="{ 'name': 'profile', params: { 'id': comment.user.id } }">
+                        {{ comment.user.name }}
                     </RouterLink>
                 </strong></p>
         </div>
 
 
-        <p class="text-gray-600">{{ post.created_at_formatted }}</p>
+        <p class="text-gray-600">{{ comment.created_at_formatted }}</p>
     </div>
 
-    <p>{{ post.body }}</p>
-
+    <p>{{ comment.body }}</p>
+    <!--
     <div class="my-6 flex justify-between">
         <div class="flex space-x-6">
             <div class="flex items-center space-x-2">
@@ -54,51 +54,23 @@
                 </path>
             </svg>
         </div>
+        
     </div>
+    -->
 </template>
 <script>
 import axios from 'axios'
 
 export default {
-    name: 'Post',
-    props: ['post'],
+    name: 'Comment',
+    props: ['comment'],
     data() {
         return {
-            interval: null,
-            like_count: this.post.likes_count,
-            comment_count: this.post.comments_count
+            interval: null
         }
     },
-    created() {
-        //this.interval = setInterval(this.refreshPost, 5000)
-    },
-    beforeDestroy() {
-        //clearInterval(this.interval)
-    },
     methods: {
-        likePost(postId) {
-            axios.post(`/api/posts/${postId}/like`)
-                .then((response) => {
-                    if (response.status === 200) {
-                        this.like_count = response.data.post.likes_count
-                        this.comment_count = response.data.post.comments_count
-                    } else {
-                        console.log(response)
-                    }
-                })
-                .catch((error) => {
-                    console.log('error', error)
-                })
-        },
-        refreshPost() {
-            axios.get(`/api/posts/${this.post.id}`)
-                .then((response) => {
-                    this.like_count = response.data.likes_count
-                })
-                .catch((error) => {
-                    console.log('error', error)
-                })
-        },
+        
     }
 }
 </script>
