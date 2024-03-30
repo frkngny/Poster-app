@@ -52,6 +52,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def get_posts_count(self):
         return self.posts.all().count()
+    
+    def __str__(self) -> str:
+        return str(self.name)
 
 class Friendship(models.Model):
     SENT = 'sent'

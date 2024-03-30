@@ -37,8 +37,6 @@ export default {
     data() {
         return {
             interval: null,
-            like_count: 0,
-            comment_count: 0,
             post: {},
             commentBody: '',
             post_comments: []
@@ -57,22 +55,7 @@ export default {
             axios.get(`/api/posts/${this.$route.params.id}`)
                 .then((response) => {
                     this.post = response.data
-                    this.like_count = response.data.likes_count
-                    this.comment_count = response.data.comments_count
                     this.post_comments = response.data.post_comments
-                })
-                .catch((error) => {
-                    console.log('error', error)
-                })
-        },
-        likePost(postId) {
-            axios.post(`/api/posts/${postId}/like`)
-                .then((response) => {
-                    if (response.status === 200) {
-                        this.like_count = response.data.post.likes_count
-                    } else {
-                        console.log(response)
-                    }
                 })
                 .catch((error) => {
                     console.log('error', error)
@@ -82,8 +65,10 @@ export default {
             axios.post(`/api/posts/${this.post.id}/comment`, { 'body': this.commentBody })
                 .then((response) => {
                     if (response.status === 200) {
+                        this.post = response.data.post
                         this.comment_count = response.data.post.comments_count
                         this.post_comments.unshift(response.data.comment)
+                        this.commentBody = ''
                     } else {
                         console.log(response)
                     }

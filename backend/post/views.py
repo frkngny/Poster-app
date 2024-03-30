@@ -56,7 +56,7 @@ class PostLike(CreateAPIView):
             like = Like.objects.get(user=user, post=post)
             like.delete()
         
-        return JsonResponse({'post': PostSerializer(like.post).data})
+        return JsonResponse({'post': PostDetailSerializer(like.post).data})
 
 class PostComment(CreateAPIView, ListAPIView):
     def get(self, request, *args, **kwargs):

@@ -28,7 +28,7 @@ class Post(models.Model):
         return timesince(self.created_at)
     
     def likes_count(self):
-        return self.liked.all().count()
+        return self.post_likes.all().count()
     
     def comments_count(self):
         return self.post_comments.all().count()

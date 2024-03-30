@@ -22,5 +22,6 @@ def post_save_comment_post(sender, instance, **kwargs):
     user_ = instance.user
     post_ = instance.post
     if kwargs.get('created'):
-        post_.commented.add(user_)
-        post_.save()
+        if user_ not in post_.commented.all():
+            post_.commented.add(user_)
+            post_.save()
