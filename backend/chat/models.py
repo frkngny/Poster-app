@@ -13,6 +13,9 @@ class Conversation(models.Model):
     
     def updated_at_formatted(self):
         return timesince(self.updated_at)
+    
+    class Meta:
+        ordering = ['-updated_at']
 
 
 class Message(models.Model):
@@ -32,3 +35,6 @@ class Message(models.Model):
         if len(self.body) > threshold_len:
             ex = "..."
         return self.body[0:threshold_len] + ex
+    
+    class Meta:
+        ordering = ['created_at']

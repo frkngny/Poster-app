@@ -34,12 +34,16 @@
                                 <span class="text-xs text-gray-500 leading-none">{{ message.created_at_formatted }}</span>
                             </div>
                             <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">
-                                <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                                <RouterLink :to="{ name: 'profile', params: { 'id': message.sender.id } }">
+                                    <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                                </RouterLink>
                             </div>
                         </div>
                         <div class="flex w-full mt-2 space-x-3 max-w-md" v-else>
                             <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">
-                                <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                                <RouterLink :to="{ name: 'profile', params: { 'id': message.sender.id } }">
+                                    <img src="https://i.pravatar.cc/300?img=70" class="w-[40px] rounded-full">
+                                </RouterLink>
                             </div>
                             <div>
                                 <div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
@@ -69,6 +73,7 @@
 <script>
 import axios from 'axios';
 import { useUserStore } from '@/stores/user';
+import { RouterLink } from 'vue-router';
 
 export default {
     name: 'chat',
@@ -106,7 +111,6 @@ export default {
             axios.get(`/api/chat/${chatId}`)
                 .then(response => {
                     this.activeConversation = response.data
-                    console.log(this.$refs.conversations)
                 })
                 .catch(error => {
                     console.log('error', error);

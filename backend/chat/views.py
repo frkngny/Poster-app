@@ -1,8 +1,10 @@
 from django.http import JsonResponse
 from .serializers import ConversationSerializer, MessageSerializer, ChatDetailSerializer
 from .models import Conversation, Message
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, GenericAPIView
 from rest_framework import status
+
+from account.models import User
 
 
 class Conversations(ListAPIView):
@@ -11,6 +13,14 @@ class Conversations(ListAPIView):
         conversations = Conversation.objects.filter(users__in=[request.user])
         serializer = self.serializer_class(conversations, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+class ConversationView(ListAPIView):
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(pk=kwargs.get('user_pk'))
+        conversation, created = Conversation.objects.filter(users__in=[request.user]).filter(users__in=[user]).get_or_create()
+        if created:
+            conversation.users.add(request.user, user)
+        return JsonResponse({'conversation': ConversationSerializer(conversation).data})
 
 class ChatDetail(ListAPIView, CreateAPIView):
     serializer_class = ChatDetailSerializer

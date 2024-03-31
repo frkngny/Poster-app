@@ -22,7 +22,11 @@
                     <p v-else-if="!hasRequest && hasBackRequest" class="text-xs text-gray-500">Pending friend request.
                     </p>
                     <button class="inline-block py-4 px-6 bg-purple-600 text-white rounded-lg"
-                        @click="sendFriendRequest" v-else-if="!hasRequest && !hasBackRequest && myFriends.filter(usr => usr.id === user.id).length == 0">Add friend</button>
+                        @click="sendFriendRequest"
+                        v-else-if="!hasRequest && !hasBackRequest && myFriends.filter(usr => usr.id === user.id).length == 0">Add
+                        friend</button>
+                    <button class="inline-block mt-4 py-4 px-6 bg-purple-600 text-white rounded-lg" @click="sendMessage"
+                        v-if="myFriends.filter(usr => usr.id === user.id).length > 0">Send Message</button>
                 </div>
             </div>
         </div>
@@ -178,6 +182,15 @@ export default {
                     this.myFriends = response.data.friends
                     console.log(this.myFriends);
                     console.log(this.user);
+                })
+                .catch((error) => {
+                    console.log('error', error)
+                })
+        },
+        sendMessage() {
+            axios.get(`/api/chat/${this.$route.params.id}/get_or_create`)
+                .then(response => {
+                    this.$router.push({name: 'chat'})
                 })
                 .catch((error) => {
                     console.log('error', error)
