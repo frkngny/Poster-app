@@ -6,13 +6,12 @@
                 <h1 class="mb-6 text-2xl">Login</h1>
 
                 <p class="mb-6 text-gray-500">
-                    Lorem ipsum dolor sit mate. Lorem ipsum dolor sit mate. Lorem ipsum dolor sit mate.
-                    Lorem ipsum dolor sit mate. Lorem ipsum dolor sit mate. Lorem ipsum dolor sit mate.
+                    Welcome to Poster! <br>
+                    A place where you post your thoughts as a poster.
                 </p>
 
                 <p class="font-bold">
-                    Don't have an account? <RouterLink :to="{ 'name': 'signup' }" class="underline">Click here
-                    </RouterLink> to sign up!
+                    <RouterLink :to="{ 'name': 'signup' }" class="underline">Don't have an account</RouterLink>?
                 </p>
             </div>
         </div>
@@ -108,10 +107,7 @@ export default {
                     })
                     .catch((error) => {
                         this.toastStore.showToast(3000, error.response.data.detail, 'bg-red-300')
-                        //console.log('error', error)
                     })
-
-
             }
         }
     }
