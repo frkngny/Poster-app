@@ -1,5 +1,7 @@
 # Fullstack Poster App (Django + Vue.js)
 
+This is a full stack social media app (similar to LinkedIn/Twitter) developed with Django RF and VueJS.
+
 ## Frontend (Vue.js)
 npm init vue
 * Vue router - Yes
